@@ -18,8 +18,8 @@ def ler_planilha(nome_arq):
 nome_arq = "Lista.xlsx"
 
 
-for linha in ler_planilha(nome_arq):
-    print(linha)
+# for linha in ler_planilha(nome_arq):
+#     print(linha)
 
 #Nomeando o driver do Chrome para utilização no código
 nav = webdriver.Chrome()
