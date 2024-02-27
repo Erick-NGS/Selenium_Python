@@ -1,5 +1,7 @@
 # Imports para o projeto
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import time
 import openpyxl
 
@@ -28,7 +30,19 @@ nav = webdriver.Chrome()
 nav.get("https://mercadolivre.com.br")
 
 # Esperando alguns segundos para a página carregar completamente
-time.sleep(2)
+time.sleep(3)
+
+for item in ler_planilha(nome_arq):
+    campo_de_busca = nav.find_element(By.TAG_NAME, "INPUT")
+
+    campo_de_busca.send_keys(item)
+    campo_de_busca.send_keys(Keys.ENTER)
+    time.sleep(5)
+
+    campo_de_busca = nav.find_element(By.TAG_NAME, "INPUT")
+    campo_de_busca.send_keys(Keys.CONTROL + "a")
+    campo_de_busca.send_keys(Keys.DELETE)
+    time.sleep(3)
 
 #Saindo do navegador
 nav.quit()
