@@ -50,7 +50,7 @@ for item in ler_planilha(nome_arq):
 
     # Acessando a página do produto
     nome_produto.click()
-    time.sleep(10)
+    time.sleep(5)
 
     # Após o acesso a página, buscando o valor do item pesquisado
     # preco_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[2]/div/div/div/span[1]")
