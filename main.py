@@ -20,6 +20,8 @@ def ler_planilha(nome_arq):
 nome_arq = "Lista.xlsx"
 lista_itens = []
 lista_preco = []
+lista_link = []
+lista_orcamento = []
 
 
 # for linha in ler_planilha(nome_arq):
@@ -57,8 +59,10 @@ for item in ler_planilha(nome_arq):
     preco_produto = nav.find_element(By.XPATH, "//meta[@itemprop='price']").get_attribute("content")
     # print(preco_produto)
     lista_preco.append(preco_produto)
-
     time.sleep(5)
+
+    link_produto = nav.current_url
+    lista_link.append(link_produto)
 
     # Limpando o campo de pesquisa de produtos
     campo_de_busca = nav.find_element(By.TAG_NAME, "INPUT")
@@ -66,8 +70,16 @@ for item in ler_planilha(nome_arq):
     campo_de_busca.send_keys(Keys.DELETE)
     time.sleep(3)
 
-print(lista_itens)
-print(lista_preco)
+orcamento = 0
+for preco in lista_preco:
+    orcamento += float(preco)
+
+lista_orcamento.append(round(orcamento, 2))
+
+# print(lista_itens)
+# print(lista_preco)
+# print(lista_link)
+# print(lista_orcamento)
 
 #Saindo do navegador
 nav.quit()
