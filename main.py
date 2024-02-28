@@ -32,17 +32,31 @@ nav.get("https://mercadolivre.com.br")
 # Esperando alguns segundos para a página carregar completamente
 time.sleep(3)
 
+# Iterando por cada item da lista de produtos a serem pesquisados
 for item in ler_planilha(nome_arq):
+    # Fazendo a pesquisa do produto
     campo_de_busca = nav.find_element(By.TAG_NAME, "INPUT")
     campo_de_busca.send_keys(item)
     campo_de_busca.send_keys(Keys.ENTER)
     time.sleep(5)
 
-    nome_produto = nav.find_element(By.XPATH, "//*[@id=*]/div[2]/div/div[2]/a")
+    # Buscando o primeiro item na query de resultados de pesquisa de produto
+    # nome_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[*]/a")
+    nome_produto = nav.find_element(By.CSS_SELECTOR, "a[class='ui-search-item__group__element ui-search-link__title-card ui-search-link']")
     print(nome_produto.text)
+
+    # Acessando a página do produto
+    nome_produto.click()
+    time.sleep(10)
+
+    # Após o acesso a página, buscando o valor do item pesquisado
+    # preco_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[2]/div/div/div/span[1]")
+    preco_produto = nav.find_element(By.XPATH, "//meta[@itemprop='price']").get_attribute("content")
+    print(preco_produto)
+
     time.sleep(5)
 
-
+    # Limpando o campo de pesquisa de produtos
     campo_de_busca = nav.find_element(By.TAG_NAME, "INPUT")
     campo_de_busca.send_keys(Keys.CONTROL + "a")
     campo_de_busca.send_keys(Keys.DELETE)
