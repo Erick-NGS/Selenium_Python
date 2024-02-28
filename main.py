@@ -18,6 +18,8 @@ def ler_planilha(nome_arq):
     return items
 
 nome_arq = "Lista.xlsx"
+lista_itens = []
+lista_preco = []
 
 
 # for linha in ler_planilha(nome_arq):
@@ -43,7 +45,8 @@ for item in ler_planilha(nome_arq):
     # Buscando o primeiro item na query de resultados de pesquisa de produto
     # nome_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[*]/a")
     nome_produto = nav.find_element(By.CSS_SELECTOR, "a[class='ui-search-item__group__element ui-search-link__title-card ui-search-link']")
-    print(nome_produto.text)
+    # print(nome_produto.text)
+    lista_itens.append(nome_produto.text)
 
     # Acessando a página do produto
     nome_produto.click()
@@ -52,7 +55,8 @@ for item in ler_planilha(nome_arq):
     # Após o acesso a página, buscando o valor do item pesquisado
     # preco_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[2]/div/div/div/span[1]")
     preco_produto = nav.find_element(By.XPATH, "//meta[@itemprop='price']").get_attribute("content")
-    print(preco_produto)
+    # print(preco_produto)
+    lista_preco.append(preco_produto)
 
     time.sleep(5)
 
@@ -61,6 +65,9 @@ for item in ler_planilha(nome_arq):
     campo_de_busca.send_keys(Keys.CONTROL + "a")
     campo_de_busca.send_keys(Keys.DELETE)
     time.sleep(3)
+
+print(lista_itens)
+print(lista_preco)
 
 #Saindo do navegador
 nav.quit()
