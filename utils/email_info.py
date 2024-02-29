@@ -1,5 +1,4 @@
 # Variáveis de ambiente para envio de email do relatório final
-
 sender_email = ""
 sender_password = ""
 receiver_email = ""

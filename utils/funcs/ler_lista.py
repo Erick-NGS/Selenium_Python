@@ -1,5 +1,7 @@
+# Import(s) para o arquivo
 import openpyxl
 
+# Func para leitura de lista de itens para realizar a pesquisa de produtos
 def ler_planilha(nome_arq):
     wb = openpyxl.load_workbook(nome_arq)
 

@@ -1,11 +1,12 @@
+# Imports do arquivo
 import email, smtplib, ssl
-
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from utils.email_info import sender_email, sender_password, receiver_email, email_subject, email_body, server_name, port_number, filename
 
+# Func para fazer o envio do relatório por email
 def enviar_email():
     email_message = MIMEMultipart()
     email_message["From"] = sender_email
