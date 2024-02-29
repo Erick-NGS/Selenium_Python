@@ -22,7 +22,9 @@ def criar_tabela(itens, precos, links, orcamento_total):
 
     index = 2
     for preco in precos:
-        ws.cell(column=2, row=index, value=preco)
+        preco = str(preco)
+        preco = preco.replace(".", ",")
+        ws.cell(column=2, row=index, value=f"R${preco}")
         index+=1
 
     index = 2
