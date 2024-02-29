@@ -4,6 +4,9 @@ from openpyxl import Workbook
 wb = Workbook()
 ws = wb.active
 
+# Nome de arquivo de relatório salvo
+filename_report = "Report.xlsx"
+
 # Mensagens de erros mapeadas
 msg_erro_pesquisa = "Produto não encontrado!"
 msg_erro = "Erro ao pesquisar item!"
@@ -53,4 +56,4 @@ def criar_tabela(itens, precos, links, orcamento_total):
         index+=1
 
 
-    wb.save("Report.xlsx")
+    wb.save(filename_report)
