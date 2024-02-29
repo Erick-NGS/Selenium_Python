@@ -4,15 +4,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-sender_email = "engs.3003@gmail.com"
-sender_password = "mjpo zgva zimg jdlh"
-receiver_email = "engs.3003@gmail.com"
-email_subject = "Report de orçamento para montagem de PC"
-email_body = "Olá!\n\nSegue anexo o arquivo com o orçamento pedido!\n\nAtenciosamente, Python_Bot1"
-server_name = "smtp.gmail.com"
-port_number = 465
-filename = "Report_teste.xlsx"
+from email_info import sender_email, sender_password, receiver_email, email_subject, email_body, server_name, port_number, filename
 
 email_message = MIMEMultipart()
 email_message["From"] = sender_email
