@@ -34,7 +34,7 @@ def criar_tabela(itens, precos, links, orcamento_total):
 
     index = 2
     for orcamento in orcamento_total:
-        ws.cell(column=4, row=index, value=orcamento)
+        ws.cell(column=4, row=index, value=f"R${orcamento}")
         index+=1
 
 
