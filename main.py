@@ -3,22 +3,13 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
-import openpyxl
+from ler_lista import ler_planilha
 from escrever_report import criar_tabela
 
-def ler_planilha(nome_arq):
-    wb = openpyxl.load_workbook(nome_arq)
-
-    planilha = wb.active
-
-    items = []
-
-    for linha in planilha.iter_rows(values_only=True):
-        items.append(linha)
-
-    return items
-
 nome_arq = "Lista.xlsx"
+
+ler_planilha(nome_arq)
+
 lista_item = []
 lista_preco = []
 lista_link = []
