@@ -1,5 +1,5 @@
 # Imports do arquivo
-import email, smtplib, ssl
+import smtplib, ssl
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
