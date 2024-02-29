@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 from ler_lista import ler_planilha
 from escrever_report import criar_tabela
+from envio_email import enviar_email
 
 nome_arq = "Lista.xlsx"
 
@@ -77,3 +78,5 @@ lista_orcamento.append(round(orcamento, 2))
 nav.quit()
 
 criar_tabela(lista_item, lista_preco, lista_link, lista_orcamento)
+
+enviar_email()
