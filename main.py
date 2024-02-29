@@ -2,13 +2,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import NoSuchElementException
 import time
 from utils.funcs.ler_lista import ler_planilha
 from utils.funcs.escrever_report import criar_tabela
 from utils.funcs.envio_email import enviar_email
 
+# Nome de arquivo com lista de produtos a serem pesquisados
 nome_arq = "Lista.xlsx"
 
 ler_planilha(nome_arq)
@@ -21,9 +21,6 @@ lista_orcamento = []
 msg_erro_pesquisa = "Produto não encontrado!"
 msg_erro = "Erro ao pesquisar item!"
 
-
-# for linha in ler_planilha(nome_arq):
-#     print(linha)
 
 #Nomeando o driver do Chrome para utilização no código
 nav = webdriver.Chrome()
@@ -38,8 +35,18 @@ try:
 except Exception as erro_navegar:
     print(f"Erro ao navegar a página do site: {erro_navegar}")
 
+
+try:
+    lista_itens = ler_planilha(nome_arq)
+    print(f"Lista de produtos lida com sucesso!\n")
+except Exception as err:
+    print(f"Erro ao ler lista de produtos a serem pesquisados: {err}")
+
 # Iterando por cada item da lista de produtos a serem pesquisados
-for item in ler_planilha(nome_arq):
+for item in lista_itens:
+    # Formatando texto de item para log
+    item_format = str(item).replace("(", "").replace(")", "").replace(",", "").replace("'", "")
+
     # Fazendo a pesquisa do produto
     campo_de_busca = nav.find_element(By.TAG_NAME, "INPUT")
     campo_de_busca.send_keys(item)
@@ -48,7 +55,6 @@ for item in ler_planilha(nome_arq):
 
     try:
         # Buscando o primeiro item na query de resultados de pesquisa de produto
-        # nome_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[*]/a")
         nome_produto = nav.find_element(By.CSS_SELECTOR, "a[class='ui-search-item__group__element ui-search-link__title-card ui-search-link']")
         # print(nome_produto.text)
         lista_item.append(nome_produto.text)
@@ -57,26 +63,27 @@ for item in ler_planilha(nome_arq):
         nome_produto.click()
         time.sleep(5)
 
+    # Excceção caso item pesquisado não seja encontrado
     except NoSuchElementException as err:
         try:
             pesquisa_erro = nav.find_element(By.CSS_SELECTOR, "h3[class='ui-search-rescue__title']")
-            print(f"Item {item} não encontrado.")
-            lista_item.append(str(item).replace("(", "").replace(")", "").replace(",", ""))
+            print(f"Item {item_format} não encontrado!")
+            lista_item.append(item_format)
             lista_preco.append(msg_erro_pesquisa)
             lista_link.append(msg_erro_pesquisa)
+            print(f"Item - {item_format}\nPreço - {msg_erro_pesquisa}\n")
             continue
-
+        # Excceção caso haja algum erro na pesquisa do item    
         except NoSuchElementException as err:
             print(f"Erro ao pesquisar item {item}.\nErro: {err}.")
-            lista_item.append(str(item).replace("(", "").replace(")", "").replace(",", ""))
+            lista_item.append(item_format)
             lista_preco.append(msg_erro)
             lista_link.append(msg_erro)
+            print(f"Item - {item_format}\nPreço - {msg_erro}\n")
             continue
 
     # Após o acesso a página, buscando o valor do item pesquisado
-    # preco_produto = nav.find_element(By.XPATH, "//*[@*]/div[2]/div/div[2]/div/div/div/span[1]")
     preco_produto = nav.find_element(By.XPATH, "//meta[@itemprop='price']").get_attribute("content")
-    # print(preco_produto)
     lista_preco.append(preco_produto)
     time.sleep(3)
 
@@ -89,6 +96,8 @@ for item in ler_planilha(nome_arq):
     campo_de_busca.send_keys(Keys.DELETE)
     time.sleep(3)
 
+    print(f"Item - {item_format}\nPreço - R${preco_produto}\n")
+
 orcamento = 0
 for preco in lista_preco:
     if preco == msg_erro_pesquisa or preco == msg_erro:
@@ -97,20 +106,20 @@ for preco in lista_preco:
 
 lista_orcamento.append(round(orcamento, 2))
 
-# print(lista_item)
-# print(lista_preco)
-# print(lista_link)
-# print(lista_orcamento)
+print(f"Valor de orçamento previsto na lista - R${round(orcamento, 2)}\n")
+
 
 #Saindo do navegador
 nav.quit()
 
 try:
     criar_tabela(lista_item, lista_preco, lista_link, lista_orcamento)
+    print(f"Report criado e salvo com sucesso!")
 except Exception as err:
     print (f"Erro ao compor relatório: {err}")
 
 try:
     enviar_email()
+    print(f"Email de relatório final enviado com sucesso!")
 except Exception as err:
     print (f"Erro no envio de email do relatório: {err}")
