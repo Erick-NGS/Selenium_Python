@@ -4,7 +4,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email_info import sender_email, sender_password, receiver_email, email_subject, email_body, server_name, port_number, filename
+from utils.email_info import sender_email, sender_password, receiver_email, email_subject, email_body, server_name, port_number, filename
 
 def enviar_email():
     email_message = MIMEMultipart()

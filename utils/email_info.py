@@ -1,6 +1,6 @@
-sender_email = "engs.3003@gmail.com"
+sender_email = ""
 sender_password = ""
-receiver_email = "engs.3003@gmail.com"
+receiver_email = ""
 email_subject = "Report de orçamento para montagem de PC"
 email_body = "Olá!\n\nSegue anexo o arquivo com o orçamento pedido!\n\nAtenciosamente, Python_Bot1"
 server_name = "smtp.gmail.com"

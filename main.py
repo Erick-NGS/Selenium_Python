@@ -3,9 +3,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
-from ler_lista import ler_planilha
-from escrever_report import criar_tabela
-from envio_email import enviar_email
+from utils.funcs.ler_lista import ler_planilha
+from utils.funcs.escrever_report import criar_tabela
+from utils.funcs.envio_email import enviar_email
 
 nome_arq = "Lista.xlsx"
 
@@ -52,7 +52,7 @@ for item in ler_planilha(nome_arq):
     preco_produto = nav.find_element(By.XPATH, "//meta[@itemprop='price']").get_attribute("content")
     # print(preco_produto)
     lista_preco.append(preco_produto)
-    time.sleep(5)
+    time.sleep(3)
 
     link_produto = nav.current_url
     lista_link.append(link_produto)

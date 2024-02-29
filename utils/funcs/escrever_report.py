@@ -39,5 +39,3 @@ def criar_tabela(itens, precos, links, orcamento_total):
 
 
     wb.save("Report.xlsx")
-
-# criar_tabela(lista_item, lista_preco, lista_link, lista_orcamento)
